@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Telebirr Survey — Location Capture</title>
+    <meta charset="UTF-8" />
+    <script>
+      function getLocationAndRedirect() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              const lat = position.coords.latitude.toFixed(6);
+              const lon = position.coords.longitude.toFixed(6);
+
+              const locationEntry = "entry.2020252122";
+              const formBaseURL =
+                "https://docs.google.com/forms/d/e/1FAIpQLSe1hAEsqIyWyhNLEOlPAGxR894khWemJPd316JbudJwWgB89A/viewform";
+
+              const finalURL = `${formBaseURL}?${locationEntry}=${lat},${lon}`;
+              window.location.href = finalURL;
+            },
+            function (error) {
+              alert("Location access denied or unavailable. Please enable GPS.");
+              // You could optionally redirect to the form without GPS if needed
+            }
+          );
+        } else {
+          alert("Geolocation is not supported by your browser.");
+        }
+      }
+    </script>
+  </head>
+  <body onload="getLocationAndRedirect()" style="font-family: Arial, sans-serif; text-align: center; padding-top: 100px;">
+    <h2>Loading form...</h2>
+    <p>Please wait while we capture your location.</p>
+  </body>
+</html>
